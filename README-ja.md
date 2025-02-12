@@ -14,7 +14,7 @@ CustomNavigationTitleは、スクロールに応じてナビゲーションタ�
 - SwiftUIの`ScrollView`、`List`、`Form`に対応
 
 ## 動作環境
--   iOS 15.0+
+-   iOS 16.0+
 
 ## インストール
 Swift Package Manager (SPM) を使用してインストールできます。
@@ -31,7 +31,7 @@ Swift Package Manager (SPM) を使用してインストールできます。
 2. 次にタイトルの表示・非表示をトリガーするViewに`titleVisibilityAnchor()`修飾子を追加します。このViewが可視領域から外れるとタイトルが表示されます。
 * ViewがNavigationStack等でラップされていれば、これだけで機能します。
 * `.navigationTitle()`より`.scrollAwareTitle()`が優先されますが、Navigation History Stack機能のために`.navigationTitle()`も設定することを推奨します。
-* 詳細なサンプルは[Examplesフォルダのプロジェクト](Examples/)にあります。
+* 詳細なサンプルは[Examplesフォルダのプロジェクト](Examples/CustomNavigationTitleExample/CustomNavigationTitleExample/ContentView.swift)にあります。
 
 ```swift
 import SwiftUI

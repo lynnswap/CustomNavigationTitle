@@ -12,7 +12,7 @@ struct BoundsPreferenceKey: PreferenceKey {
 }
 
 extension View {
-    func titleVisibilityAnchor() -> some View {
+    public func titleVisibilityAnchor() -> some View {
         self.anchorPreference(
             key: BoundsPreferenceKey.self,
             value: .bounds
@@ -58,18 +58,18 @@ private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
 }
 
 extension View {
-    func scrollAwareTitle<V: View>(@ViewBuilder _ title: @escaping () -> V) -> some View {
+    public func scrollAwareTitle<V: View>(@ViewBuilder _ title: @escaping () -> V) -> some View {
         modifier(ScrollAwareTitleModifier(title: title))
     }
 }
 
 extension View {
-    func scrollAwareTitle<S: StringProtocol>(_ title: S) -> some View {
+    public func scrollAwareTitle<S: StringProtocol>(_ title: S) -> some View {
         scrollAwareTitle{
             Text(title)
         }
     }
-    func scrollAwareTitle(_ title: LocalizedStringKey) -> some View {
+    public func scrollAwareTitle(_ title: LocalizedStringKey) -> some View {
         scrollAwareTitle{
             Text(title)
         }
