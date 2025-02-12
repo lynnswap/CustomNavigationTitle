@@ -4,7 +4,7 @@ import SwiftUI
 
 struct BoundsPreferenceKey: PreferenceKey {
     typealias Value = Anchor<CGRect>?
-    static var defaultValue: Value = nil
+    static let defaultValue: Value = nil
     static func reduce(value: inout Value, nextValue: () -> Value) {
         guard let newValue = nextValue() else { return }
         value = newValue
@@ -45,7 +45,7 @@ private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
                     return Color.clear
                 }
             }
-            .toolbarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     title()
