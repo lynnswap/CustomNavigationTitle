@@ -31,7 +31,7 @@ Install using Swift Package Manager (SPM).
 2. Then, add the `titleVisibilityAnchor()` modifier to the view that triggers the title's appearance and disappearance. When this view moves out of the visible area, the title is displayed.
 * If the view is wrapped in a NavigationStack (or similar), this is all you need.
 * Although `.scrollAwareTitle()` takes precedence over `.navigationTitle()`, it is recommended to also set `.navigationTitle()` for Navigation History Stack functionality.
-* For a detailed example, see the project in the [Examples folder](Examples/CustomNavigationTitleExample/CustomNavigationTitleExample/ContentView.swift).
+* For a detailed example, [see the project in the Examples folder](Examples/CustomNavigationTitleExample/CustomNavigationTitleExample/ContentView.swift).
 
 ```swift
 import SwiftUI
