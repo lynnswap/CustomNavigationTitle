@@ -34,10 +34,12 @@ private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
                         let scrollFrame = proxy.frame(in: .local).minY
                         let itemFrame = proxy[anchor]
                         let isVisible = itemFrame.maxY > scrollFrame
-                        if isVisible && isShowNavigationTitle {
-                            isShowNavigationTitle = false
-                        } else if !isVisible && !isShowNavigationTitle {
-                            isShowNavigationTitle = true
+                        DispatchQueue.main.async{
+                            if isVisible {
+                                isShowNavigationTitle = false
+                            } else if !isVisible {
+                                isShowNavigationTitle = true
+                            }
                         }
                     }
                     return Color.clear
