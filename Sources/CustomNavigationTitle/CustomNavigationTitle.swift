@@ -51,7 +51,7 @@ private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
                     title()
                         .bold()
                         .opacity(isShowNavigationTitle ? 1 : 0)
-                        .animation(.easeIn(duration: 0.10), value: isShowNavigationTitle)
+                        .animation(.easeIn(duration: 0.15), value: isShowNavigationTitle)
                 }
             }
     }
