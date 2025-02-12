@@ -2,6 +2,8 @@
 
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
+[English is here.](README.md)
+
 CustomNavigationTitleは、スクロールに応じてナビゲーションタイトルをアニメーション付きで表示・非表示にするSwiftUI用のシンプルなパッケージです。(この効果はApple純正の設定アプリ、メールアプリ、AppStoreアプリで使われています。)
 
 ![Demo](Assets/demo01.gif)

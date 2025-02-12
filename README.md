@@ -2,6 +2,8 @@
 
 [![Swift Package Manager](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
+[日本語はこちら](README-ja.md)
+
 CustomNavigationTitle is a simple SwiftUI package that animates the display and hiding of the navigation title based on scrolling. (This effect is used in Apple's native Settings, Mail, and App Store apps.)
 
 ![Demo](Assets/demo01.gif)
@@ -9,7 +11,7 @@ CustomNavigationTitle is a simple SwiftUI package that animates the display and 
 ## Features
 - The title fades in and out based on scrolling.
 - Easily integrated with your existing code using a simple API.
-- Compatible with SwiftUI's ScrollView, List, and Form.
+- Compatible with SwiftUI's `ScrollView`, `List`, and `Form`.
 
 ## Requirements
 - iOS 15.0+
