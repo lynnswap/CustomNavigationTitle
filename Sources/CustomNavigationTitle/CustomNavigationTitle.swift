@@ -1,5 +1,3 @@
-#if os(iOS)
-
 import SwiftUI
 
 struct BoundsPreferenceKey: PreferenceKey {
@@ -22,9 +20,8 @@ extension View {
     }
 }
 
-private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
-    @State private var isShowNavigationTitle = false
-    let title: () -> V
+private struct ScrollAwareVisibilityModifier: ViewModifier {
+    @Binding var isShowNavigationTitle: Bool
 
     func body(content: Content) -> some View {
         content
@@ -34,17 +31,27 @@ private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
                         let scrollFrame = proxy.frame(in: .local).minY
                         let itemFrame = proxy[anchor]
                         let isVisible = itemFrame.maxY > scrollFrame
-                        DispatchQueue.main.async{
-                            if isVisible {
-                                isShowNavigationTitle = false
-                            } else if !isVisible {
-                                isShowNavigationTitle = true
+                        let shouldShow = !isVisible
+                        DispatchQueue.main.async {
+                            if isShowNavigationTitle != shouldShow {
+                                isShowNavigationTitle = shouldShow
                             }
                         }
                     }
                     return Color.clear
                 }
             }
+    }
+}
+
+#if os(iOS)
+private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
+    @State private var isShowNavigationTitle = false
+    let title: () -> V
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(ScrollAwareVisibilityModifier(isShowNavigationTitle: $isShowNavigationTitle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -56,24 +63,68 @@ private struct ScrollAwareTitleModifier<V: View>: ViewModifier {
             }
     }
 }
+#endif
 
+#if os(macOS)
+private enum ScrollAwareTitleStorage {
+    case plain(String)
+    case localized(LocalizedStringKey)
+}
+
+private struct ScrollAwareTextTitleModifier: ViewModifier {
+    @State private var isShowNavigationTitle = false
+    let storage: ScrollAwareTitleStorage
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(ScrollAwareVisibilityModifier(isShowNavigationTitle: $isShowNavigationTitle))
+            .modifier(MacNavigationTitleModifier(storage: storage, isVisible: isShowNavigationTitle))
+    }
+}
+
+private struct MacNavigationTitleModifier: ViewModifier {
+    let storage: ScrollAwareTitleStorage
+    let isVisible: Bool
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        switch storage {
+        case .plain(let value):
+            content.navigationTitle(isVisible ? value : "")
+        case .localized(let key):
+            let hidden: LocalizedStringKey = ""
+            content.navigationTitle(isVisible ? key : hidden)
+        }
+    }
+}
+#endif
+
+#if os(iOS)
 extension View {
     public func scrollAwareTitle<V: View>(@ViewBuilder _ title: @escaping () -> V) -> some View {
         modifier(ScrollAwareTitleModifier(title: title))
     }
 }
+#endif
 
 extension View {
     public func scrollAwareTitle<S: StringProtocol>(_ title: S) -> some View {
-        scrollAwareTitle{
+#if os(iOS)
+        scrollAwareTitle {
             Text(title)
         }
+#else
+        modifier(ScrollAwareTextTitleModifier(storage: .plain(String(title))))
+#endif
     }
+
     public func scrollAwareTitle(_ title: LocalizedStringKey) -> some View {
-        scrollAwareTitle{
+#if os(iOS)
+        scrollAwareTitle {
             Text(title)
         }
+#else
+        modifier(ScrollAwareTextTitleModifier(storage: .localized(title)))
+#endif
     }
 }
-
-#endif
